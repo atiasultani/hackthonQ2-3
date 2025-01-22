@@ -23,7 +23,7 @@ const getData = async (): Promise<Product[]> => {
 // ProductCard Component
 const ProductCard: React.FC<Product> = ({ title, imageUrl }) => (
   <div className="bg-white border rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
-    <div className="w-full h-48 relative mb-4">
+    <div className="w-full h-48 relative mb-4 grid grid-cols-2 ">
       {imageUrl ? (
         <Image
           src={urlFor(imageUrl).width(400).height(300).url()}

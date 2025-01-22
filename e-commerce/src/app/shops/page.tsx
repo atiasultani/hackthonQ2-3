@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 // Define Product interface
 interface Product {
@@ -30,18 +31,20 @@ const fetchProducts = async (): Promise<Product[]> => {
 };
 
 // ProductCard Component
-const ProductCard: React.FC<Product> = ({ title, price, description, imageUrl }) => {
+const ProductCard: React.FC<Product> = ({ _id, title, price, description, imageUrl }) => {
   return (
-    <div className="rounded-lg border shadow-md p-4 bg-white">
-      <img
-        src={imageUrl}
-        alt={title}
-        className="w-full h-48 object-cover rounded-lg mb-4"
-      />
-      <h2 className="text-lg font-semibold mb-2">{title}</h2>
-      <p className="text-sm text-gray-600 mb-4">{description}</p>
-      <p className="text-base font-bold text-green-600">${price.toFixed(2)}</p>
-    </div>
+    <Link href={`/products/${_id}`}>
+      <a className="block rounded-lg border shadow-md p-4 bg-white hover:shadow-lg transition-shadow">
+        <img
+          src={imageUrl}
+          alt={title}
+          className="w-full h-48 object-cover rounded-lg mb-4"
+        />
+        <h2 className="text-lg font-semibold mb-2">{title}</h2>
+        <p className="text-sm text-gray-600 mb-4">{description}</p>
+        <p className="text-base font-bold text-green-600">${price.toFixed(2)}</p>
+      </a>
+    </Link>
   );
 };
 
