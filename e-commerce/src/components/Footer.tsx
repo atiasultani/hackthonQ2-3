@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-
+import Link from 'next/link';
 const Footer = () => {
   return (
     <div className=' 
@@ -75,10 +75,10 @@ text-[10px]
 md:text-[16px]
 '>
   <h1 className='font-extrabold md:font-bold '> Company</h1>
-  <a href="/about">About</a>
+  <Link href="/about">About</Link>
+  <Link href="/contact-us">Contact Us</Link>
   <p>Features</p>
   <p>Career</p>
-  <a href='/contact-us' className='text-black'>Contact Us</a>
 </div>
 
 {/* frame3 open*/}

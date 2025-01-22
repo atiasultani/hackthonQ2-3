@@ -49,7 +49,7 @@ const BrandPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-6">Brand: Nike</h1>
+      <h1 className="text-3xl font-bold text-center mb-6">Branded</h1>
       {products.length === 0 ? (
         <p className="text-center text-gray-600">No products available.</p>
       ) : (

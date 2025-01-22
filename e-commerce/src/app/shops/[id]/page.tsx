@@ -34,23 +34,4 @@ const ProductPage: React.FC<{ product: Product }> = ({ product }) => {
     </div>
   );
 };
-
-// Fetch product data for the given ID
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params as { id: string };
-
-  try {
-    const response = await fetch(`https://template1-neon-nu.vercel.app/api/products/${id}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch product: ${response.statusText}`);
-    }
-
-    const product = await response.json();
-    return { props: { product } };
-  } catch (error) {
-    console.error('Error fetching product:', error);
-    return { props: { product: null } };
-  }
-};
-
 export default ProductPage;
