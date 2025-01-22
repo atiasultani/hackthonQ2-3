@@ -2,7 +2,7 @@ const browseDress =
 {
     name: 'browseDress',
     type: 'document',
-    title: 'Dress',
+    title: 'browseDress',
     fields: [
         {
             name: 'title',
