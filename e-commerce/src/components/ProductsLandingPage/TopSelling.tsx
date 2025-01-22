@@ -1,5 +1,5 @@
 import React from 'react';
-import { client } from '@/sanity/lib/client'; // Adjust the path based on your file structure
+import  client from '@/sanity/lib/client'; // Adjust the path based on your file structure
 import { urlFor } from '@/sanity/lib/image';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,7 +15,7 @@ interface Product {
 
 // Fetch the data with proper typing
 const getData = async (): Promise<Product[]> => {
-  const response = await client.fetch(`*[_type == "topSelling"] {
+  const response = await client.fetch(`*[_type == "products"][0...4] {
     _id,
     mainHeading,
     title,

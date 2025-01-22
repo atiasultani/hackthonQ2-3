@@ -1,13 +1,11 @@
-"use client"
-
 import React from 'react';
-import {useCart} from "@/components/CartContext"; // Import useCart hook
 
 interface Product {
-  _id: string;
-  name: string;
+  title: string;
   price: number;
-  imageUrl?: string;
+  discountedPrice: number;
+  imageUrl: string;
+  product:[]
 }
 
 interface AddToCartButtonProps {
@@ -15,13 +13,13 @@ interface AddToCartButtonProps {
 }
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({ product }) => {
-  const { addToCart } = useCart();
+  const handleAddToCart = () => {
+    // Add to cart logic here
+    console.log(`Added ${product.title} to cart`);
+  };
 
   return (
-    <button
-      onClick={() => addToCart(product)}
-      className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
-    >
+    <button onClick={handleAddToCart} className="bg-blue-500 text-white p-2 rounded">
       Add to Cart
     </button>
   );
