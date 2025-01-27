@@ -8,6 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import SearchBar from './SearchBar';
+import CartNotification from './CartNotification';
 const Header = () => {
   return (
 <div className='pt-[110px]
@@ -25,8 +26,8 @@ max-w:screen max-h:auto  md:w-screen lg:w-screen xl:w-screen
     <li><Link className='hover:underline hover:underline-offset-4' href="/onSale"> On Sale </Link></li>
     <li><Link className='hover:underline hover:underline-offset-4 ' href="/newArrivals">New Arrivals </Link></li>
     <li><Link className='hover:underline hover:underline-offset-4' href="/brands"> Brands </Link></li>
-    <li>  <Link className='mr-16 hover:underline hover:underline-offset-4' href="/productList">Product List </Link></li>
-    <li>  <Link className='mr-16 hover:underline hover:underline-offset-4' href="/productDetail">Product Details </Link></li>
+    <li> <Link className='mr-5 hover:underline hover:underline-offset-4' href="/productList">Product List </Link></li>
+    <li><Link className='hover:underline hover:underline-offset-4' href="/productStock">Product Stock </Link></li>
     </ul>
     </div>
     
@@ -40,8 +41,6 @@ max-w:screen max-h:auto  md:w-screen lg:w-screen xl:w-screen
 <li>  <Link className='xl:mr-4 hover:underline hover:underline-offset-4' href="/onSale"> On Sale </Link></li>
 <li>  <Link className='px-4 hover:underline hover:underline-offset-4 sm:-ml-4' href="/newArrivals">New Arrivals </Link></li>
 <li>  <Link className='mr-16 hover:underline hover:underline-offset-4' href="/brands"> Brands </Link></li>
-<li>  <Link className='mr-16 hover:underline hover:underline-offset-4' href="/productList">Product List </Link></li>
-<li>  <Link className='mr-16 hover:underline hover:underline-offset-4' href="/productDetail">Product Details </Link></li>
 
        </ul>
         </SheetContent>
@@ -75,11 +74,13 @@ h-[24px]
   
   <SearchBar/>  
     </div>
-     
-    <Image src="/header2/cart-icon.svg" alt='search bar' width={20} height={20}
+    <CartNotification/>
+    <Link href="/cart">
+    <Image src="/header2/cart-icon.svg" alt='cart icon' width={20} height={20}
     className='ml-[90px] sm:ml-[40px]'/>
-      
+    </Link>
     <Image src="/header2/dp-icon.png" alt='login' width={20} height={20}/>
+    
     
     
     </div>

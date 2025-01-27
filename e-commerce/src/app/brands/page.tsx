@@ -4,49 +4,52 @@ import React, { useEffect, useState } from "react";
 import client from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
+import { useCart } from '@/components/CartContext'; // Import the useCart hook
 
 interface Product {
   _id: string;
-  name: string;
+  id: string; // Include 'id' for AddToCartButton compatibility
+  name: string; // Include 'name' for AddToCartButton compatibility
+  mainHeading: string;
+  title: string;
   price: number;
-  brand: string;
-  category: string;
+  discountedPrice: number;
   imageUrl: string;
+  category: string;
 }
+const fetchProducts = async (): Promise<Product[]> => {
+  return await client.fetch(`*[_type == "products"][8...15] {
+    _id,
+    mainHeading,
+    title,
+    price,
+    discountedPrice,
+    "imageUrl": image.asset->url
+  }`).then((products: Product[]) =>
+    products.map((product) => ({
+      ...product,
+      id: product._id, // Map _id to id
+      name: product.title, // Map title to name
+    }))
+  );
+};
 
-const BrandPage = () => {
+const BrandPage :React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { addToCart } = useCart();
 
-  // Fetch products on component mount
   useEffect(() => {
-    const fetchData = async () => {
+    const loadProducts = async () => {
       try {
-        const query = `*[_type == "products"][0...20]{
-          _id,
-          name,
-          price,
-          brand,
-          category,
-          "imageUrl": image.asset->url
-        }`;
-
-        const data = await client.fetch(query);
-        setProducts(data);
+        const products = await fetchProducts();
+        setProducts(products);
       } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
+        console.error('Error fetching products:', error);
       }
     };
 
-    fetchData();
+    loadProducts();
   }, []);
-
-  if (loading) {
-    return <p className="text-center text-gray-600">Loading products...</p>;
-  }
-
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-6">Branded</h1>
@@ -81,6 +84,10 @@ const BrandPage = () => {
               <p className="text-green-600 font-bold text-center">
                 Price: ${product.price}
               </p>
+              <div className=" w-36 py-1 bg-black  text-white font-semibold text-lg rounded-full shadow-lg hover:shadow-xl focus:outline-double focus:ring-2 focus:ring-lime-700 "
+           >
+              <button onClick={() => addToCart(product)} >Add to Cart</button>
+           </div>
             </div>
           ))}
         </div>

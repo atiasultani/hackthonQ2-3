@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-
 // Define Product interface
 interface Product {
   _id: string;
@@ -33,8 +32,8 @@ const fetchProducts = async (): Promise<Product[]> => {
 // ProductCard Component
 const ProductCard: React.FC<Product> = ({ _id, title, price, description, imageUrl }) => {
   return (
-    <Link href={`/products/${_id}`}>
-      <a className="block rounded-lg border shadow-md p-4 bg-white hover:shadow-lg transition-shadow">
+    <Link href={`/ProductDetailPage/${_id}`} className="block rounded-lg border shadow-md p-4 bg-white hover:shadow-lg transition-shadow">
+      <div>
         <img
           src={imageUrl}
           alt={title}
@@ -43,7 +42,7 @@ const ProductCard: React.FC<Product> = ({ _id, title, price, description, imageU
         <h2 className="text-lg font-semibold mb-2">{title}</h2>
         <p className="text-sm text-gray-600 mb-4">{description}</p>
         <p className="text-base font-bold text-green-600">${price.toFixed(2)}</p>
-      </a>
+      </div>
     </Link>
   );
 };

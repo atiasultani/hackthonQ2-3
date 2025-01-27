@@ -23,8 +23,6 @@ export default function SearchBar() {
         const data: Product[] = await client.fetch(`*[_type == "products"] {
           _id,
           name,
-          price,
-          discountPercent,
           "imageUrl": image.asset->url
         }`);
         setProducts(data); // Set the full product list
@@ -47,7 +45,7 @@ export default function SearchBar() {
     );
 
     // Update filtered products (show up to 5 results)
-    setFilteredProducts(filtered.slice(0, 5));
+    setFilteredProducts(filtered.slice(0, 3));
   };
 
   return (
@@ -89,12 +87,7 @@ export default function SearchBar() {
                   )}
                   <div>
                     <p className="font-medium text-gray-800">{product.name}</p>
-                    <p className="text-xs text-gray-500">${product.price}</p>
-                    {product.discountPercent && (
-                      <span className="text-green-500 text-xs">
-                        {product.discountPercent}% off
-                      </span>
-                    )}
+                  
                   </div>
                 </li>
               ))}

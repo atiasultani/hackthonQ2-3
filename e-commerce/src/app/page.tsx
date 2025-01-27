@@ -4,6 +4,7 @@ import BrowseDress from '@/components/ProductsLandingPage/BrowseByDress';
 import MainCover from '@/components/ProductsLandingPage/MainCover';
 import Brands from '@/components/Brands';
 import NewArrivals from '../components/ProductsLandingPage/Arrivels';
+
 const page = () => {
   return (
     <div>

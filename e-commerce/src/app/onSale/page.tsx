@@ -1,19 +1,9 @@
-"use client"
+'use client';
 import React, { useEffect, useState } from 'react';
-import client from '@/sanity/lib/client'; // Adjust the path based on your file structure
-import { urlFor } from '@/sanity/lib/image';
+import client from '@/sanity/lib/client';
 import Image from 'next/image';
-import AddToCartButton from '@/components/AddToCartButton';
-
-interface Product {
-  _id: string;
-  mainHeading: string;
-  title: string;
-  price: number;
-  discountedPrice: number;
-  imageUrl: string;
-  product:[]
-}
+import { Product } from '@/components/types'; // Import the Product type
+import { useCart } from '@/components/CartContext'; // Import the useCart hook
 
 const fetchProducts = async (): Promise<Product[]> => {
   return await client.fetch(`*[_type == "products"][8...15] {
@@ -28,56 +18,49 @@ const fetchProducts = async (): Promise<Product[]> => {
 
 const OnSale: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { addToCart } = useCart();
 
   useEffect(() => {
-    const getData = async () => {
+    const loadProducts = async () => {
       try {
-        const data = await fetchProducts();
-        setProducts(data);
+        const products = await fetchProducts();
+        setProducts(products);
       } catch (error) {
         console.error('Error fetching products:', error);
-      } finally {
-        setLoading(false);
       }
     };
 
-    getData();
+    loadProducts();
   }, []);
-
-  if (loading) {
-    return <div className="text-center py-8">Loading...</div>;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-center mb-6">
-        {products[0]?.mainHeading || 'ON SALE'}
-      </h1>
+      <h1 className="text-3xl font-bold text-center mb-8">On Sale</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
+        {products.map((product: Product) => (
           <div
             key={product._id}
-            className="border rounded-lg p-4 flex flex-col items-center bg-white shadow hover:shadow-lg transition-shadow"
+            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
           >
-            {product.imageUrl && (
-              <div className="w-full h-48 relative mb-4">
-                <Image
-                  src={urlFor(product.imageUrl).width(400).height(300).url()}
-                  alt={product.title}
-                  fill
-                  className="rounded-md"
-                />
-              </div>
-            )}
-            <h2 className="text-lg font-semibold text-gray-800 text-center">
-              {product.title}
-            </h2>
-            <p className="text-gray-500">Price: ${product.price}</p>
-            <p className="text-green-600 font-bold">
-              Discounted: ${product.discountedPrice}
-            </p>
-            <AddToCartButton product={product} />
+            <Image
+              src={product.imageUrl}
+              alt={`Image of ${product.title}`}
+              width={300}
+              height={300}
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h2 className="text-lg font-semibold text-gray-800">{product.title}</h2>
+              <p className="text-gray-600 mb-2">{product.mainHeading}</p>
+              <p className="text-gray-800 font-bold">Price: ${product.price}</p>
+              <p className="text-green-500 font-bold">Discounted Price: ${product.discountedPrice}</p>
+            </div>
+            <div className='flex justify-center mb-4  w-36 py-1 bg-black  text-white font-semibold text-lg rounded-full shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-lime-700 transition-all'>
+            <button 
+              onClick={() => addToCart(product)}            >
+              Add to Cart
+            </button>
+            </div>
           </div>
         ))}
       </div>
